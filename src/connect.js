@@ -1,11 +1,11 @@
-const shallowEqual = require('../utils/shallowEqual.js')
-const warning = require('../utils/warning.js')
-const wrapActionCreators = require('../utils/wrapActionCreators.js')
+import shallowEqual from './shallowEqual'
+import warning from './warning'
+import wrapActionCreators from './wrapActionCreators'
 
 const defaultMapStateToProps = state => ({}) // eslint-disable-line no-unused-vars
 const defaultMapDispatchToProps = dispatch => ({dispatch})
 
-function connect(mapStateToProps, mapDispatchToProps) {
+export default function connect(mapStateToProps, mapDispatchToProps) {
   const shouldSubscribe = Boolean(mapStateToProps)
   const mapState = mapStateToProps || defaultMapStateToProps
   const app = getApp();
@@ -52,5 +52,3 @@ function connect(mapStateToProps, mapDispatchToProps) {
     return Object.assign({}, pageConfig, mapDispatch(app.store.dispatch), {onLoad, onUnload})
   }
 }
-
-module.exports = connect
