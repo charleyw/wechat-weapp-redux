@@ -1,4 +1,7 @@
-import Provider from './Provider'
-import connect from './connect'
+import Provider from './Provider.js'
+import connect from './connect.js'
 
-export { Provider, connect }
+module.exports = {
+  Provider: Provider,
+  connect: connect
+}

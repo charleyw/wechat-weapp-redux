@@ -1,4 +1,4 @@
-import warning from './warning'
+import warning from './warning.js'
 
 function checkStoreShape(store) {
   const missingMethods = ['subscribe', 'dispatch', 'getState'].filter(m => !store.hasOwnProperty(m));
@@ -11,9 +11,11 @@ function checkStoreShape(store) {
   }
 }
 
-export default function Provider(store) {
+function Provider(store) {
   checkStoreShape(store)
   return function(appConfig) {
     return Object.assign({}, appConfig, {store})
   }
 }
+
+module.exports = Provider
