@@ -49,7 +49,8 @@ _PS: 代码是基于[react-redux](https://github.com/reactjs/react-redux)修改�
     })
     ```
 2. 在页面的定义上使用connect,绑定redux store到页面上。
-    ```
+
+    ```js
     const pageConfig = {
       data: {
       },
@@ -59,7 +60,7 @@ _PS: 代码是基于[react-redux](https://github.com/reactjs/react-redux)修改�
     ```
     页面的定义
     
-    ```
+    ```js
     const mapStateToData = state => ({
       todos: state.todos,
       visibilityFilter: state.visibilityFilter
@@ -67,7 +68,7 @@ _PS: 代码是基于[react-redux](https://github.com/reactjs/react-redux)修改�
     ```    
     定义要映射哪些state到页面
     
-    ```    
+    ```js
     const mapDispatchToPage = dispatch => ({
       setVisibilityFilter: filter => dispatch(setVisibilityFilter(filter)),
       toggleTodo: id => dispatch(toggleTodo(id)),
@@ -76,11 +77,12 @@ _PS: 代码是基于[react-redux](https://github.com/reactjs/react-redux)修改�
     ```
     定义要映射哪些方法到页面
     
-    ```        
+    ```js      
     const nextPageConfig = connect(mapStateToData, mapDispatchToPage)(pageConfig)
     ```        
     使用connect将上述定义添加到pageConfig中。
-    ```            
+
+    ```js            
     Page(nextPageConfig);
     ```
     注册小程序的页面
