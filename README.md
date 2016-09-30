@@ -8,12 +8,13 @@ _PS: 代码是基于[react-redux](https://github.com/reactjs/react-redux)修改�
 1. clone或者下载代码库到本地:
     
     ```
-       git clone https://github.com/charleyw/wechat-weapp-redux
+    git clone https://github.com/charleyw/wechat-weapp-redux
     ```
 2. 将`lib/wechat-weapp-redux`目录直接拷贝到小程序的工程中,例如(下面假设):
+
     ```    
-       cd wechat-weapp-redux
-       cp -r lib/wechat-weapp-redux <小程序根目录>/libs
+    cd wechat-weapp-redux
+    cp -r lib/wechat-weapp-redux <小程序根目录>/libs
     ```       
  上面的命令将包拷贝到小程序的`libs`目录下
 
