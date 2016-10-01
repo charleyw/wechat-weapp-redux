@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build:lib": "babel src --out-dir lib/wechat-weapp-redux",
+    "build:umd": "NODE_ENV=development webpack src/index.js dist/wechat-weapp-redux.js",
+    "build:umd:min": "NODE_ENV=production webpack src/index.js dist/wechat-weapp-redux.min.js",
+    "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

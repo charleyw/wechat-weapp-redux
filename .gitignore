@@ -33,5 +33,5 @@ bower_components/
 .idea
 
 # do not keep dist
-dist
+#dist
 .DS_Store
