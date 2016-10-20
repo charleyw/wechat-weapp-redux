@@ -34,6 +34,11 @@ function connect(mapStateToProps, mapDispatchToProps) {
       this.setData(mappedState)
     }
 
+    const {
+      onLoad: _onLoad,
+      onUnload: _onUnload,
+    } = pageConfig
+
     function onLoad(options) {
       this.store = app.store;
       if (!this.store) {
@@ -43,9 +48,15 @@ function connect(mapStateToProps, mapDispatchToProps) {
         this.unsubscribe = this.store.subscribe(handleChange.bind(this, options))
         handleChange.apply(this)
       }
+      if (typeof _onLoad === 'function') {
+        _onLoad.call(this, options)
+      }
     }
 
     function onUnload() {
+      if (typeof _onUnload === 'function') {
+        _onUnload.call(this)
+      }
       typeof this.unsubscribe === 'function' && this.unsubscribe()
     }
 
