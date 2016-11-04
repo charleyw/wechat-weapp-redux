@@ -1,14 +1,16 @@
-import shallowEqual from './shallowEqual.js'
+import stateDiff from './stateDiff.js'
 import warning from './warning.js'
 import wrapActionCreators from './wrapActionCreators.js'
 
 const defaultMapStateToProps = state => ({}) // eslint-disable-line no-unused-vars
-const defaultMapDispatchToProps = dispatch => ({dispatch})
+const defaultMapDispatchToProps = dispatch => ({
+  dispatch
+})
 
 function connect(mapStateToProps, mapDispatchToProps) {
   const shouldSubscribe = Boolean(mapStateToProps)
   const mapState = mapStateToProps || defaultMapStateToProps
-  const app = getApp();
+  const app = getApp()
 
   let mapDispatch
   if (typeof mapDispatchToProps === 'function') {
@@ -27,11 +29,17 @@ function connect(mapStateToProps, mapDispatchToProps) {
       }
 
       const state = this.store.getState()
-      const mappedState = mapState(state, options);
-      if (!this.data || shallowEqual(this.data, mappedState)) {
-        return;
+      const mappedState = mapState(state, options)
+      const {
+        __state
+      } = this
+      const patch = stateDiff(mappedState, __state)
+      if (!patch) {
+        return
       }
-      this.setData(mappedState)
+      this.__state = mappedState
+      // only pass in updated data to .setData()
+      this.setData(patch)
     }
 
     const {
@@ -44,9 +52,12 @@ function connect(mapStateToProps, mapDispatchToProps) {
       if (!this.store) {
         warning("Store对象不存在!")
       }
-      if(shouldSubscribe){
-        this.unsubscribe = this.store.subscribe(handleChange.bind(this, options))
-        handleChange.apply(this)
+      if (shouldSubscribe) {
+        this.__state = {}
+        this.unsubscribe = this.store.subscribe(() => {
+          handleChange.call(this, options)
+        })
+        handleChange.call(this)
       }
       if (typeof _onLoad === 'function') {
         _onLoad.call(this, options)
@@ -54,13 +65,18 @@ function connect(mapStateToProps, mapDispatchToProps) {
     }
 
     function onUnload() {
+      typeof this.unsubscribe === 'function' && this.unsubscribe()
+      // should no long receive state changes after .onUnload()
+      this.unsubscribe = null
       if (typeof _onUnload === 'function') {
         _onUnload.call(this)
       }
-      typeof this.unsubscribe === 'function' && this.unsubscribe()
     }
 
-    return Object.assign({}, pageConfig, mapDispatch(app.store.dispatch), {onLoad, onUnload})
+    return Object.assign({}, pageConfig, mapDispatch(app.store.dispatch), {
+      onLoad,
+      onUnload
+    })
   }
 }
 
