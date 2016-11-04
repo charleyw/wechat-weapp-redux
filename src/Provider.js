@@ -1,4 +1,5 @@
 import warning from './warning.js'
+import meld from 'meld';
 
 function checkStoreShape(store) {
   const missingMethods = ['subscribe', 'dispatch', 'getState'].filter(m => !store.hasOwnProperty(m));
@@ -14,7 +15,9 @@ function checkStoreShape(store) {
 function Provider(store) {
   checkStoreShape(store)
   return function(appConfig) {
-    return Object.assign({}, appConfig, {store})
+    appConfig.store=store;
+    return appConfig;
+    //return Object.assign({}, appConfig, {store})
   }
 }
 
