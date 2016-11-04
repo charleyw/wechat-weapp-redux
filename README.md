@@ -97,4 +97,9 @@ _PS: 代码是基于[react-redux](https://github.com/reactjs/react-redux)修改�
 ## Example
 
 详细的使用例子可以参照: [wechat-weapp-redux-todos](https://github.com/charleyw/wechat-weapp-redux-todos)
+
+真机实测版请clone下面这个repo，用小程序开发工具开启预览：
+```
+git clone -b release https://github.com/charleyw/wechat-weapp-redux-todos.git
+```
 ​    
