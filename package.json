@@ -20,5 +20,8 @@
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-es2015": "^6.16.0",
     "webpack": "^1.13.2"
+  },
+  "dependencies": {
+    "meld": "^1.3.2"
   }
 }
