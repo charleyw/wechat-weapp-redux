@@ -69,7 +69,7 @@ function connect(mapStateToProps, mapDispatchToProps) {
     if (pageConfig.onLoad) meld.before(pageConfig, 'onLoad', onLoad);
     else pageConfig.onLoad=onLoad;
 
-    if (pageConfig.onUnload) meld.before(pageConfig, 'onUnload', onUnload);
+    if (pageConfig.onUnload) meld.after(pageConfig, 'onUnload', onUnload);
     else pageConfig.onUnload=onUnload
 
     return pageConfig;
