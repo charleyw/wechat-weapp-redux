@@ -1,6 +1,7 @@
 import shallowEqual from './shallowEqual.js'
 import warning from './warning.js'
 import wrapActionCreators from './wrapActionCreators.js'
+import {assign} from './utils/Object.js'
 
 const defaultMapStateToProps = state => ({}) // eslint-disable-line no-unused-vars
 const defaultMapDispatchToProps = dispatch => ({dispatch})
@@ -60,7 +61,7 @@ function connect(mapStateToProps, mapDispatchToProps) {
       typeof this.unsubscribe === 'function' && this.unsubscribe()
     }
 
-    return Object.assign({}, pageConfig, mapDispatch(app.store.dispatch), {onLoad, onUnload})
+    return assign({}, pageConfig, mapDispatch(app.store.dispatch), {onLoad, onUnload})
   }
 }
 
