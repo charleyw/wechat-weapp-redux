@@ -56,11 +56,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _Provider = __webpack_require__(2);
+	var _Provider = __webpack_require__(3);
 
 	var _Provider2 = _interopRequireDefault(_Provider);
 
-	var _connect = __webpack_require__(3);
+	var _connect = __webpack_require__(4);
 
 	var _connect2 = _interopRequireDefault(_connect);
 
@@ -73,6 +73,38 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var assign = function assign(target) {
+	    'use strict';
+	    // We must check against these specific cases.
+
+	    if (target === undefined || target === null) {
+	        throw new TypeError('Cannot convert undefined or null to object');
+	    }
+
+	    var output = Object(target);
+	    for (var index = 1; index < arguments.length; index++) {
+	        var source = arguments[index];
+	        if (source !== undefined && source !== null) {
+	            for (var nextKey in source) {
+	                if (source.hasOwnProperty(nextKey)) {
+	                    output[nextKey] = source[nextKey];
+	                }
+	            }
+	        }
+	    }
+	    return output;
+	};
+
+	module.exports = {
+	    assign: assign
+	};
+
+/***/ },
+/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -102,14 +134,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = warning;
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _warning = __webpack_require__(1);
+	var _warning = __webpack_require__(2);
 
 	var _warning2 = _interopRequireDefault(_warning);
+
+	var _Object = __webpack_require__(1);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -126,29 +160,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	function Provider(store) {
 	  checkStoreShape(store);
 	  return function (appConfig) {
-	    return Object.assign({}, appConfig, { store: store });
+	    return (0, _Object.assign)({}, appConfig, { store: store });
 	  };
 	}
 
 	module.exports = Provider;
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _shallowEqual = __webpack_require__(4);
+	var _shallowEqual = __webpack_require__(5);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _warning = __webpack_require__(1);
+	var _warning = __webpack_require__(2);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _wrapActionCreators = __webpack_require__(5);
+	var _wrapActionCreators = __webpack_require__(6);
 
 	var _wrapActionCreators2 = _interopRequireDefault(_wrapActionCreators);
+
+	var _Object = __webpack_require__(1);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -188,6 +224,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.setData(mappedState);
 	    }
 
+	    var _onLoad = pageConfig.onLoad,
+	        _onUnload = pageConfig.onUnload;
+
+
 	    function onLoad(options) {
 	      this.store = app.store;
 	      if (!this.store) {
@@ -197,20 +237,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.unsubscribe = this.store.subscribe(handleChange.bind(this, options));
 	        handleChange.apply(this);
 	      }
+	      if (typeof _onLoad === 'function') {
+	        _onLoad.call(this, options);
+	      }
 	    }
 
 	    function onUnload() {
+	      if (typeof _onUnload === 'function') {
+	        _onUnload.call(this);
+	      }
 	      typeof this.unsubscribe === 'function' && this.unsubscribe();
 	    }
 
-	    return Object.assign({}, pageConfig, mapDispatch(app.store.dispatch), { onLoad: onLoad, onUnload: onUnload });
+	    return (0, _Object.assign)({}, pageConfig, mapDispatch(app.store.dispatch), { onLoad: onLoad, onUnload: onUnload });
 	  };
 	}
 
 	module.exports = connect;
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -241,7 +287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = shallowEqual;
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
