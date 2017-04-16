@@ -1,5 +1,5 @@
 (function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof module === 'object')
+	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
@@ -235,7 +235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      if (shouldSubscribe) {
 	        this.unsubscribe = this.store.subscribe(handleChange.bind(this, options));
-	        handleChange.apply(this);
+	        handleChange.call(this, options);
 	      }
 	      if (typeof _onLoad === 'function') {
 	        _onLoad.call(this, options);
