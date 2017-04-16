@@ -46,8 +46,8 @@ function connect(mapStateToProps, mapDispatchToProps) {
         warning("Store对象不存在!")
       }
       if(shouldSubscribe){
-        this.unsubscribe = this.store.subscribe(handleChange.bind(this, options))
-        handleChange.apply(this)
+        this.unsubscribe = this.store.subscribe(handleChange.bind(this, options));
+        handleChange.call(this, options)
       }
       if (typeof _onLoad === 'function') {
         _onLoad.call(this, options)
