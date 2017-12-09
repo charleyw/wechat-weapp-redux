@@ -28,7 +28,7 @@ function connect(mapStateToProps, mapDispatchToProps) {
       }
 
       const state = this.store.getState()
-      const mappedState = mapState(state, options);
+      const mappedState = mapState.bind(this)(state, options);
       if (!this.data || shallowEqual(this.data, mappedState)) {
         return;
       }
