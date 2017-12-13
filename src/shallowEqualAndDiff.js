@@ -1,17 +1,16 @@
-function shallowEqual(objA, objB) {
+function shallowEqualAndDiff(objA = {}, objB = {}) {
+  const diffAByB = {};
+
   if (objA === objB) {
-    return true
+    return {
+      equal: true,
+      diff: diffAByB
+    }
   }
 
   const keysA = Object.keys(objA)
-  const keysB = Object.keys(objB)
-
-  if (keysA.length !== keysB.length) {
-    return false
-  }
 
   let equal = true;
-  const diffAByB = {};
   // Test for A's keys different from B.
   const hasOwn = Object.prototype.hasOwnProperty
   for (let i = 0; i < keysA.length; i++) {
@@ -29,4 +28,4 @@ function shallowEqual(objA, objB) {
   }
 }
 
-module.exports = shallowEqual
+module.exports = shallowEqualAndDiff

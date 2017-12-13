@@ -262,20 +262,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	function shallowEqual(objA, objB) {
+	function shallowEqualAndDiff() {
+	  var objA = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var objB = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	  var diffAByB = {};
+
 	  if (objA === objB) {
-	    return true;
+	    return {
+	      equal: true,
+	      diff: diffAByB
+	    };
 	  }
 
 	  var keysA = Object.keys(objA);
-	  var keysB = Object.keys(objB);
-
-	  if (keysA.length !== keysB.length) {
-	    return false;
-	  }
 
 	  var equal = true;
-	  var diffAByB = {};
 	  // Test for A's keys different from B.
 	  var hasOwn = Object.prototype.hasOwnProperty;
 	  for (var i = 0; i < keysA.length; i++) {
@@ -292,7 +294,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	}
 
-	module.exports = shallowEqual;
+	module.exports = shallowEqualAndDiff;
 
 /***/ }),
 /* 6 */
