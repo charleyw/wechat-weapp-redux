@@ -1,4 +1,4 @@
-import shallowEqual from './shallowEqual.js'
+import shallowEqualAndDiff from './shallowEqualAndDiff.js'
 import warning from './warning.js'
 import wrapActionCreators from './wrapActionCreators.js'
 import {assign} from './utils/Object.js'
@@ -28,11 +28,12 @@ function connect(mapStateToProps, mapDispatchToProps) {
       }
 
       const state = this.store.getState()
-      const mappedState = mapState(state, options);
-      if (!this.data || shallowEqual(this.data, mappedState)) {
+      const mappedState = mapState.bind(this)(state, options);
+      const shallowEqualRes = shallowEqualAndDiff(mappedState, this.data);
+      if (!this.data || shallowEqualRes.equal) {
         return;
       }
-      this.setData(mappedState)
+      this.setData(shallowEqualRes.diff)
     }
 
     const {

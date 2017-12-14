@@ -52,7 +52,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -71,9 +71,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  connect: _connect2.default
 	};
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -103,9 +103,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    assign: assign
 	};
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -133,9 +133,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = warning;
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -166,15 +166,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = Provider;
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _shallowEqual = __webpack_require__(5);
+	var _shallowEqualAndDiff = __webpack_require__(5);
 
-	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
+	var _shallowEqualAndDiff2 = _interopRequireDefault(_shallowEqualAndDiff);
 
 	var _warning = __webpack_require__(2);
 
@@ -217,11 +217,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      var state = this.store.getState();
-	      var mappedState = mapState(state, options);
-	      if (!this.data || (0, _shallowEqual2.default)(this.data, mappedState)) {
+	      var mappedState = mapState.bind(this)(state, options);
+	      var shallowEqualRes = (0, _shallowEqualAndDiff2.default)(mappedState, this.data);
+	      if (!this.data || shallowEqualRes.equal) {
 	        return;
 	      }
-	      this.setData(mappedState);
+	      this.setData(shallowEqualRes.diff);
 	    }
 
 	    var _onLoad = pageConfig.onLoad,
@@ -255,40 +256,49 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = connect;
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
-	function shallowEqual(objA, objB) {
+	function shallowEqualAndDiff() {
+	  var objA = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var objB = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	  var diffAByB = {};
+
 	  if (objA === objB) {
-	    return true;
+	    return {
+	      equal: true,
+	      diff: diffAByB
+	    };
 	  }
 
 	  var keysA = Object.keys(objA);
-	  var keysB = Object.keys(objB);
 
-	  if (keysA.length !== keysB.length) {
-	    return false;
-	  }
-
+	  var equal = true;
 	  // Test for A's keys different from B.
 	  var hasOwn = Object.prototype.hasOwnProperty;
 	  for (var i = 0; i < keysA.length; i++) {
-	    if (!hasOwn.call(objB, keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
-	      return false;
+	    var keyA = keysA[i];
+	    if (!hasOwn.call(objB, keyA) || objA[keyA] !== objB[keyA]) {
+	      diffAByB[keyA] = objA[keyA];
+	      equal = false;
 	    }
 	  }
 
-	  return true;
+	  return {
+	    equal: equal,
+	    diff: diffAByB
+	  };
 	}
 
-	module.exports = shallowEqual;
+	module.exports = shallowEqualAndDiff;
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -329,7 +339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = wrapActionCreators;
 
-/***/ }
+/***/ })
 /******/ ])
 });
 ;
