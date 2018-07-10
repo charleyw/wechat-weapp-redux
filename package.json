@@ -14,11 +14,6 @@
   },
   "author": "",
   "license": "MIT",
-  "files": [
-    "dist",
-    "lib",
-    "src"
-  ],
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-core": "^6.16.0",
